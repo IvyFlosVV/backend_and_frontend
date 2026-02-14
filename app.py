@@ -17,6 +17,10 @@ Notable projects: 'Muse & Machine' and 'Wind of Ocean Hues'.
 Tone: Professional, warm, and witty (Retro Warm aesthetic).
 """
 
+@app.route('/', methods=['GET'])
+def home():
+    return "Ivy-Bot Backend is live and running!"
+
 @app.route('/chat', methods=['POST'])
 def chat():
     data = request.json
