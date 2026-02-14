@@ -4,36 +4,41 @@ from flask_cors import CORS
 import google.generativeai as genai
 
 app = Flask(__name__)
-CORS(app) # Crucial: allows your portfolio to talk to Render
+# This allows your HTML site to talk to Render without browser security blocking it
+CORS(app) 
 
-# Setup Gemini using the environment variable you just set on Render
+# Connect to Gemini
 genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
-model = genai.GenerativeModel('gemini-2.5-flash-lite')
+# Using 2.5 Flash to give you a fresh, much larger quota limit!
+model = genai.GenerativeModel('gemini-2.5-flash') 
 
 IVY_PERSONA = """
-You are Ivy-Bot, an AI version of Ivy Weng. 
-Context: CMU student (Class of 2029), Stats & ML major, background in humanities.
+You are an AI version of Ivy Weng. Speak in the first person ("I", "my") as if you are her.
+Context: I am a CMU student (Class of 2029) majoring in Stats & ML, with a background in the humanities.
 Notable projects: 'Muse & Machine' and 'Wind of Ocean Hues'.
-Tone: Professional, warm, and witty (Retro Warm aesthetic).
+Tone: Professional, warm, witty, and helpful.
 """
 
+# This fixes the "404 Not Found" when you click your Render link!
 @app.route('/', methods=['GET'])
 def home():
     return "Ivy-Bot Backend is live and running!"
 
 @app.route('/chat', methods=['POST'])
 def chat():
-    data = request.json
-    user_message = data.get("message")
-    
-    if not user_message:
-        return jsonify({"error": "No message provided"}), 400
-
     try:
+        data = request.json
+        user_message = data.get("message")
+        
+        if not user_message:
+            return jsonify({"error": "No message provided"}), 400
+
         prompt = f"{IVY_PERSONA}\n\nUser Question: {user_message}"
         response = model.generate_content(prompt)
+        
         return jsonify({"reply": response.text})
     except Exception as e:
+        # If Gemini complains, this sends the error safely back to your website
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
