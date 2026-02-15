@@ -129,7 +129,7 @@ async function askIvy() {
     btn.style.opacity = "0.5";
     display.scrollTop = display.scrollHeight;
 
-    try {
+try {
         const response = await fetch('https://backend-and-frontend-3clh.onrender.com/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -143,10 +143,10 @@ async function askIvy() {
                     ${data.reply}
                 </div>`;
         } else if (data.error) {
-            display.innerHTML += `<div style="color: #ff6b6b; font-size: 13px; text-align: center; font-weight: bold; margin: 10px 0;">Backend Error: ${data.error}</div>`;
+            display.innerHTML += `<div style="color: #ff6b6b; font-size: 13px; text-align: center; font-weight: bold; margin: 10px 0; word-wrap: break-word;">Backend Error: ${data.error}</div>`;
         }
     } catch (err) {
-        display.innerHTML += `<div style="color: #ff6b6b; font-size: 13px; text-align: center; font-weight: bold; margin: 10px 0;">⚠️ Connection error. Check backend.</div>`;
+        display.innerHTML += `<div style="color: #ff6b6b; font-size: 13px; text-align: center; font-weight: bold; margin: 10px 0;">⚠️ Connection error. Server might be waking up, try again in 1 minute!</div>`;
     } finally {
         status.style.display = 'none';
         btn.disabled = false;
