@@ -1,0 +1,33 @@
+AI Tools Used:
+
+Google Gemini (Chat): Used as a pair-programmer for brainstorming, generating the Flask backend code, styling the Glassmorphism frontend, and debugging API/deployment errors.
+
+GitHub Copilot: Used in VS Code for inline autocomplete suggestions (specifically for Javascript error handling and finally blocks).
+
+Google Gemini API (gemini-2.5-flash): Used as the core LLM powering the chatbot backend.
+
+Key Prompts that Shaped Implementation:
+
+Conceptualizing the Backend: * Prompt: "lets start another project for 15113! Assignment Overview... how is it possible to do [an AI chatbot]? can i like tune a model to make it answer only about my stuff?"
+
+Impact: Decided against fine-tuning and instead used System Prompting / Context Injection on a Flask backend to securely store the persona and API key on Render.
+
+Frontend & UI Design: * Prompt: "fix my html for me. and i dont want the chat font like this; use font similar to instagram or other chat apps"
+
+Prompt: "its ugly! I want this inner window to fit the center; and also add a liquidy glass colorful background... light blue, pink, purple and yellow should do"
+
+Prompt: /* 1. The Specific Pastel Flowing Background (Light Yellow, Light Blue, Light Pink) */
+
+/* Light Yellow (#fff1a8), Light Blue (#aed9e0), Light Pink (#ffcdd2) */
+
+/* Key point: All glass effects are applied here, internal element backgrounds are transparent */
+
+Impact: Iteratively transformed a basic HTML form into a modern, centered, Glassmorphism UI with a seamless frosted glass container and a moving pastel gradient background.
+
+Troubleshooting & Deployment: * Prompt: "[Screenshots showing 404 Model Not Found and 429 Quota Exceeded errors]"
+
+Impact: Adjusted the backend to use the gemini-2.5-flash model to resolve quota limits and added dynamic error-catching in the JavaScript to display readable alerts on the UI.
+
+Prompt: "[Screenshot showing 404 error on the Render root URL]"
+
+Impact: Added a default GET route (/) to the Flask app to act as a health check for the deployment.
